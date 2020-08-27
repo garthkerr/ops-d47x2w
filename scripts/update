@@ -1,0 +1,19 @@
+#!/bin/bash
+
+_update() {
+  _get_latest_release() {
+    curl --silent "https://api.github.com/repos/$1/tags" \
+      | jq -r '.[] | select(.name | contains("b") | not) | select(.name | contains("rc") | not) | .' \
+      | jq -rs '.[0].name' \
+      | cut -c 2-
+  }
+
+  export ver_an; ver_an=$(_get_latest_release 'ansible/ansible')
+  export ver_pk; ver_pk=$(_get_latest_release 'hashicorp/packer')
+  export ver_tf; ver_tf=$(_get_latest_release 'hashicorp/terraform')
+
+  j2 templates/Dockerfile.j2 > Dockerfile
+  j2 templates/README.md.j2 > README.md
+}
+
+_update
