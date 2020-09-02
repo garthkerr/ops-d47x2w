@@ -17,7 +17,7 @@ ARG REQ_APT='\
   zip'
 
 ARG REQ_PIP="\
-  ansible-base==2.10.0 \
+  ansible-base==X.Y.Z \
   awscli \
   boto3 \
   cryptography \
