@@ -2,36 +2,17 @@ FROM hashicorp/packer:{{ ver_pk }} AS packer
 FROM hashicorp/terraform:{{ ver_tf }} AS terraform
 FROM ubuntu:20.04
 
-ARG REQ_APT='\
-  bash \
-  curl \
-  dnsutils \
-  git \
-  jq \
-  jsonnet \
-  make \
-  python-is-python3 python3-pip \
-  sshpass \
-  vim \
-  wget \
-  zip'
+ENV TZ=Etc/UTC
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-ARG REQ_PIP="\
-  ansible-base=={{ ver_an }} \
-  awscli \
-  boto3 \
-  cryptography \
-  dopy \
-  netaddr \
-  pyhcl \
-  pymysql \
-  yq"
+ARG APT='bash curl dnsutils git jq jsonnet make python-is-python3 python3-pip sshpass vim wget zip'
+ARG PIP='ansible-base==2.10.0 awscli boto3 cryptography dopy netaddr pyhcl pymysql yq'
 
-RUN set -x && export DEBIAN_FRONTEND=noninteractive && \
+RUN set -x && \
   apt-get update && \
-  apt-get --yes install ${REQ_APT} && \
-  pip3 install ${REQ_PIP} && \
-  apt-get clean && rm -rf ~/.cache
+  apt-get --yes install ${APT} && \
+  pip3 install ${PIP} && \
+  rm -rf ~/.cache
 
 COPY ./scripts/.bin/asdf-terraform /tmp/asdf-terraform
 RUN set -x && bash -c "/tmp/asdf-terraform" && rm "/tmp/asdf-terraform"
