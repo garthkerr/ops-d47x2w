@@ -4,7 +4,7 @@ A collection of infrastructure management tools. Use with [direnv](https://diren
 
 ### Included Tools
 
-- [ansible](https://docs.ansible.com/ansible/latest/index.html) (X.Y.Z)
+- [ansible](https://docs.ansible.com/ansible/latest/index.html)
 - [asdf](https://asdf-vm.com/)
 - [aws](https://github.com/aws/aws-cli)
 - [jq](https://stedolan.github.io/jq/)
