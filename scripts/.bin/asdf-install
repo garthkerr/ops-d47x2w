@@ -10,6 +10,7 @@ _asdf_install() {
 
   asdf plugin add terraform
   echo '. ~/.asdf/asdf.sh && asdf reshim && terraform "$@"' > /bin/terraform
+  echo 'plugin_cache_dir = "$HOME/.terraform.d/plugin-cache"' > ~/.terraformrc
   chmod +x /bin/terraform
 }
 
