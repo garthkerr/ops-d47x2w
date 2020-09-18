@@ -1,5 +1,4 @@
 FROM hashicorp/packer:1.6.2 AS packer
-FROM hashicorp/terraform:0.14.0-alpha20200910 AS terraform
 FROM ubuntu:20.04
 
 ENV TZ=Etc/UTC
@@ -18,6 +17,5 @@ COPY ./scripts/.bin/asdf-terraform /tmp/asdf-terraform
 RUN set -x && bash -c "/tmp/asdf-terraform" && rm "/tmp/asdf-terraform"
 
 COPY --from=packer /bin/packer /bin/packer
-COPY --from=terraform /bin/terraform /bin/terraform
 
 WORKDIR /app
